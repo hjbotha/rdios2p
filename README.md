@@ -1,4 +1,4 @@
-# Rdio Now Playing
+# Rdio Station to Playlist
 
 http://rdios2p.herokuapp.com/
 
