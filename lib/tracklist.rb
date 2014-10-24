@@ -49,7 +49,7 @@ get '/' do
     </p>
 
     <form method="get" enctype="text/plain" action="/CreateStation">
-    <hidden name="version" value="2">
+    <input type="hidden" name="version" value="2">
     <table border=0>
     <tr><td>Station URL:</td><td><input type="text" name="station_url"></td></tr>
     <tr><td>Playlist Name:</td><td><input type="text" name="playlist_name"> (optional, defaults to the name of the station)</td></tr>
@@ -66,15 +66,15 @@ end
 get '/CreateStation' do
   access_token = session[:at]
   access_token_secret = session[:ats]
-  if access_token and access_token_secret and params[:station_url] and params[:existing] and params[:version] == 2
+  if access_token and access_token_secret and params[:station_url] and params[:existing] and params[:version] == "2"
     rdio = Rdio.new([RDIO_CONSUMER_KEY, RDIO_CONSUMER_SECRET], [access_token, access_token_secret])
     response = "<html><body><title>Rdio Station to Playlist</title><p><h1>RdioS2P</h1></p>"
-response += "<p>Getting your information..."
+    response += "<p>Getting your information..."
     user_key  = rdio.call('currentUser')['result']['key']
-response += " Done.<br>"
-response += "Getting station key..."
+    response += " Done.<br>"
+    response += "Getting station key..."
     station = rdio.call('getObjectFromUrl', { :url => params[:station_url] })['result']
-response += " Done.<br>"
+    response += " Done.<br>"
     station_key = station["key"]
     station_name = station["name"]
     if params[:playlist_name] and params[:playlist_name] != "" then
